@@ -21,6 +21,8 @@ I’ve given a fair amount of thought to have and have created a spread sheet (l
 
 In considering the pin assignments, one factor to keep in mind is that, with the exception of PF6 (RESET), all port pins can function as GPIOs.  So just because the assignment list doesn’t say GPIO, any and all port pins (excluding PF6) can be used for GPIO.
 
+## DB32 - Configuration for the 32 Pin Part
+
 So, as currently configured, this assignment table does the following:
 
 USART-0 (ALT) (PA5, PA4) appears on DBuno edge pins D0 and D1 respectively, placing a USART for the DBuno on the same pins as the original UNO.
@@ -58,7 +60,7 @@ With these pin assignments on the DB32 part, there are three primary port config
 3 USARTS, no SPI, 2 I2C
 1 USART, 2 SPI, 2 I2C
 
-## Db28 - The 28 Pin DIP Part
+## DB28 - Configuration for the 28 Pin DIP Part
 
 In the case of the 28 pin DIP part (thank you Microchip for including a DIP package in the mix for those who have difficulty soldering surfacemount devices), we loose PF2, PF3 (access to I2C-1) and PF4 and PF5 (access to USART-2), which leaves open DBuno edge pins A4, A5, D8 and D9.
 
