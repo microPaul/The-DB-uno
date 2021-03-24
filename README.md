@@ -64,39 +64,39 @@ With these pin assignments on the DB32 part, there are three primary port config
 In simplified table form these assignments for the DB32 are:
 
 ~~~text
-AVR-DB32       DBuno Edge
-Port Pins      Pin Lables
----------      ----------
-  PA0             n/a  24 MHz Xtal - 1 of 2 pin header
-  PA1             n/a  24 MHz Xtal - 2 of 2 pin header
-  PA2             SDA
-  PA3             SDL
-  PA4             D1
-  PA5             D0
-  PA6             D2
-  PA7             D3
+AVR-DB32    DBuno Edge
+Port Pins   Pin Lables
+---------  ----------
+  PA0        n/a    24 MHz Xtal - pin 1 of 2 pin header
+  PA1        n/a    24 MHz Xtal - pin 2 of 2 pin header
+  PA2        SDA    0-SDA
+  PA3        SDL    0-SDL
+  PA4        D1     0-USART-RX(ALT)    0-MISO
+  PA5        D0     0-USART-TX(ALT)    0-MOSI
+  PA6        D2     0-USART-XCK(ALT)   0-SCK
+  PA7        D3     0-USART-XDIR(ALT)  0-SS*
   
-  PC0             D11
-  PC1             D12
-  PC2             D13
-  PC3             D10
+  PC0        D11    1-USART-TX    1-MOSI  (VDDIO2)
+  PC1        D12    1-USART-RX    1-MISI  (VDDIO2)
+  PC2        D13    1-USART-XCK   1-SCK   (VDDIO2)
+  PC3        D10    1-USART-XDIR  1-SS*   (VDDIO2)
   
-  PD0             not present on DB32
-  PD1             A1
-  PD2             A2
-  PD3             A3
-  PD4             D6
-  PD5             unused
-  PD6             D7
-  PD7             A0
+  PD0        not present on DB32
+  PD1        A1     AIN1   OP0,INP   LUT2,IN1
+  PD2        A2     AIN2   OP0,OUT   LUT2,IN2
+  PD3        A3     AIN3   OP0,INN   LUT2,OUT
+  PD4        D6     AIN4   
+  PD5        unused
+  PD6        D7     DAC    AIN6      LUT2,OUT(ALT)
+  PD7        A0     VREFA  AIN7
   
-  PF0             D4  via closed solder bridge
-  PF1             D5  via closed solder bridge
-  PF2             A4
-  PF3             A5
-  PF4             D8
-  PF5             D9
-  PF6              RESET*
+  PF0        D4     2-USART-TX      32K-XTAL - D4 via open solder bridge
+  PF1        D5     2-USART-RX      32K-XTAL - D5 via open solder bridge
+  PF2        A4     2-USART-XCK     1-SDA
+  PF3        A5     2-USART-XDIR    1-SCL
+  PF4        D8     2-USART-TX(ALT)   AIN20
+  PF5        D9     2-USART-RX(ALT)   AIN21
+  PF6        RESET*
   
 ~~~
 
@@ -115,42 +115,45 @@ no USARTs, 2 SPI, 1 I2C
 In simplified table form these assignments for the DB28 DIP are:
 
 ~~~text
-AVR-DB32       DBuno Edge
-Port Pins      Pin Lables
----------      ----------
-  PA0             D8  via open solder bridge - 24 MHz Xtal
-  PA1             D9  via open solder bridge - 24 MHz Xtal
-  PA2             SDA
-  PA3             SDL
-  PA4             D1
-  PA5             D0
-  PA6             D2
-  PA7             D3
+AVR-DB28    DBuno Edge
+Port Pins   Pin Lables
+---------  ----------
+  PA0        D8     24 MHz Xtal - D8 via open solder bridge - 
+  PA1        D9     24 MHz Xtal - D9 via open solder bridge 
+  PA2        SDA    0-SDA
+  PA3        SDL    0-SDL
+  PA4        D1     0-USART-RX(ALT)    0-MISO
+  PA5        D0     0-USART-TX(ALT)    0-MOSI
+  PA6        D2     0-USART-XCK(ALT)   0-SCK
+  PA7        D3     0-USART-XDIR(ALT)  0-SS*
   
-  PC0             D11
-  PC1             D12
-  PC2             D13
-  PC3             D10
+  PC0        D11    1-USART-TX    1-MOSI  (VDDIO2)
+  PC1        D12    1-USART-RX    1-MISI  (VDDIO2)
+  PC2        D13    1-USART-XCK   1-SCK   (VDDIO2)
+  PC3        D10    1-USART-XDIR  1-SS*   (VDDIO2)
   
-  PD0             not present on DB28
-  PD1             A1
-  PD2             A2
-  PD3             A3
-  PD4             D6
-  PD5             A4  via closed solder bridge
-  PD6             D7
-  PD7             A0
+  PD0        not present on DB28
+  PD1        A1     AIN1   OP0,INP   LUT2,IN1
+  PD2        A2     AIN2   OP0,OUT   LUT2,IN2
+  PD3        A3     AIN3   OP0,INN   LUT2,OUT
+  PD4        D6     AIN4   
+  PD5        unused
+  PD6        D7     DAC    AIN6      LUT2,OUT(ALT)
+  PD7        A0     VREFA  AIN7
   
-  PF0             D4  via closed solder bridge
-  PF1             D5  via closed solder bridge
-  PF2             n/a
-  PF3             n/a
-  PF4             n/a
-  PF5             n/a
-  PF6              RESET*
+  PF0        D4     2-USART-TX      32K-XTAL - D4 via open solder bridge
+  PF1        D5     2-USART-RX      32K-XTAL - D5 via open solder bridge
+  PF2               n/a
+  PF3               n/a
+  PF4               n/a
+  PF5               n/a
+  PF6               RESET*
   
                   A5 is isolated, no connection
 ~~~
 
+<p align="center">
+---ooOoo---
+</p>
 
-These assignments for both the 32 pin part and the 28 pint part can be seen as a whole on a spread sheet at this link 
+
