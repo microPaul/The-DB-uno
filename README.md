@@ -3,7 +3,7 @@ Using the AVR128DB32 on an Arduino UNO Form Factor Board
 
 I think Microchip’s new AVR128DBxx MCU is a large evolutionary step for the basic AVR® product line.  I’ve been using this device for several months and, although the ATmega328p has been a great part for the original UNO, the AVR-DB is a big step forward.  So much so, that I want to design new projects for the AVR-DB and not the 328p.
 
-When I started with Arduino I expected that I’d be using the ProMini most frequently, because of it’s small form factor.  I assumed that I’d be using it as a module on some larger board that consisted of I/O glue.  Instead, I found that I was mostly using UNOs with a perf-board shield (daughter board) mounted on top.  I used M2.5x6 pan head screws into M2.5x12 standoffs to mount the two board sandwich into whatever housing I was using.  That worked well for me and I’d like to continue with that going forward.  Yes, there are some glitches in the UNO form factor – tight clearance for some of the screw holes, 50mil offset (instead of 100mil) between the connectors for D7 and D8.  But it is what it is, and there are too many proto-boards and manufactured PCB shields that make use of the UNO form factor, and that can’t be ignored.
+When I started working with Arduino I expected that I’d be using the ProMini most frequently, because of it’s small form factor.  I assumed that I’d be using it as a module on some larger board that hosted a lot of I/O glue.  Instead, I found that I was mostly using UNOs with a perf-board shield (daughter board) mounted on top.  I used M2.5x6 pan head screws into M2.5x12 standoffs to mount the two (somestims three) board sandwich into whatever enclosure I was using.  That worked well for me and I’d like to continue with that going forward with the AVR-DB.  Yes, there are some glitches in the UNO form factor – tight clearance for some of the screw holes, 50mil offset (instead of 100mil) between the connectors for D7 and D8.  But it is what it is, and there are too many proto-boards and manufactured PCB shields that make use of the UNO form factor, and that can’t be ignored.
 
 So, the question becomes, if a typical UNO clone was modified by removing the ATmega328p (32 pin package) and replaced with an AVR128DB32 (32 pin package) to become a DB-uno, what should be the assignments from MCU ports to the signal connectors at the edge of the DB-uno board?
 
@@ -152,7 +152,11 @@ Port Pins   Pin Lables  Available Functions - Notes
              A5 is isolated, no connection
 ~~~
 
-## UPDI vs The Serial Port - Programming and Debugging
+## Other Considerations
+
+OK, we've gone that far, but what else might be considering for a DB-uno board?  These proposed changes and enhancements are just that, proposed.  Nothing is required, but all are worth some consideration.
+
+### UPDI vs The Serial Port - Programming and Debugging
 
 I’d say that 50% of my projects use MPLAB X IDE (free) with SNAP ($25) to program and debug AVR systems.  The other 50% of my projects use the Arudino IDE (free), pyupdi (free) and a USB<->Serial module ($2).  Using MPLAB X gives the programmer a lot of freedom, but with that freedom comes a lot of opportunities to “get stuck”.  For people new to MCU coding, I strongly recommend the simplicity and shallow learning curve of the Arduino IDE.  One downside of using Arduino IDE is that debugging tools are limited to printf() statements and toggling an LED.  Life is compromise.
 
@@ -164,12 +168,12 @@ With the advent of of the pyupdi utility and UPDI on AVR MCUs, I’ve lost inter
 
 3.  Allow the USB<->Serial to be configured by solder bridge jumpers for normal connection to D0, D1 *or* to use as a pyupdi programmer by providing a solder bridge jumper that connects D0 to D1 through a 4.7 K ohm resistor, and then D0 to UPDI, to allow the USB<->Serial to perform programming via utility pyupdi.
 
-## VDD
+### VDD
 
 To facilitate operation from batteries and use of sleep mode, provide a solder bridge jumper (closed) between the output of any voltage regulator or USB power source and VDD, so that the user can easily isolate VDD from all other power sources.
 
 
-## VDDIO2
+### VDDIO2
 
 Finally, there's the question of VDDIO2, the alternate power rail for the PCx ports.  VDDIO2 is a strong feature of the AVR-DB products because it allows the PCx ports to operate at a different voltage than the main MCU voltage.  There is no requirement that VDDIO2 be have a higher or lower voltage and VDD.
 
