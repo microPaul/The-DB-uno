@@ -118,8 +118,8 @@ In simplified table form these assignments for the DB28 DIP are:
 AVR-DB28    DB-uno Edge
 Port Pins   Pin Lables  Available Functions - Notes
 ---------  ----------   -------------------------------
-  PA0        D8        24 MHz Xtal - D8 via open solder bridge - 
-  PA1        D9        24 MHz Xtal - D9 via open solder bridge 
+  PA0        D8        24 MHz Xtal - D8 via open solder bridge
+  PA1        D9        24 MHz Xtal - D9 via open solder bridge
   PA2        SDA       0-SDA
   PA3        SDL       0-SDL
   PA4        D1        0-USART-RX(ALT)    0-MISO
