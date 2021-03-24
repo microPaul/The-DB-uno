@@ -56,15 +56,55 @@ With those assignments complete, we have a system that is much more flexible tha
 
 With these pin assignments on the DB32 part, there are three primary port configurations available.  They are:
 
+
 2 USARTS, 1 SPI, 2 I2C
 3 USARTS, no SPI, 2 I2C
 1 USART, 2 SPI, 2 I2C
+
+In simplified table form these assignments for the DB32 are:
+
+~~~text
+AVR-DB32       DBuno Edge
+Port Pins      Pin Lables
+---------      ----------
+  PA0             n/a  24 MHz Xtal - 1 of 2 pin header
+  PA1             n/a  24 MHz Xtal - 2 of 2 pin header
+  PA2             SDA
+  PA3             SDL
+  PA4             D1
+  PA5             D0
+  PA6             D2
+  PA7             D3
+  
+  PC0             D11
+  PC1             D12
+  PC2             D13
+  PC3             D10
+  
+  PD0             not present on DB32
+  PD1             A1
+  PD2             A2
+  PD3             A3
+  PD4             D6
+  PD5             unused
+  PD6             D7
+  PD7             A0
+  
+  PF0             D4  via closed solder bridge
+  PF1             D5  via closed solder bridge
+  PF2             A4
+  PF3             A5
+  PF4             D8
+  PF5             D9
+  PF6              RESET*
+  
+~~~
 
 ## DB28 - Configuration for the 28 Pin DIP Part
 
 In the case of the 28 pin DIP part (thank you Microchip for including a DIP package in the mix for those who have difficulty soldering surfacemount devices), we loose PF2, PF3 (access to I2C-1) and PF4 and PF5 (access to USART-2), which leaves open DBuno edge pins A4, A5, D8 and D9.
 
-So for a ARV-DB28 pin assignment, the external HF oscillators pins PA0 and P1 will be brought out to D8 and D9 respectively through solder bridge jumpers (closed if crystal is not populated, open if crystal is populated) and PD5 that was abandoned in the 32 pin configuration will be connected to DBuno edge pin A4 through a solder bride (normally closed).  DBuno edge pin A5 will be left open-circuit.  With DBuno edge pins A5 isolcated, and A4 capabile of being isolated, when needed the A4/A5 edge pins may be cross connected by hand wiring to SDA/SCL via small gauge wire jumpers.
+So for a ARV-DB28 pin assignment, the external HF oscillators pins PA0 and P1 will be brought out to D8 and D9 respectively through solder bridge jumpers (closed if crystal is not populated, open if crystal is populated) and PD5 that was abandoned in the 32 pin configuration will be connected to DBuno edge pin A4 through a solder bride (normally closed).  DBuno edge pin A5 will be left open-circuit.  With DBuno edge pins A5 isolcated, and A4 capabile of being isolated, when needed the A4/A5 edge pins may be cross connected by hand wiring to edge pins SDA/SCL via small gauge wire jumpers.
 
 With these pin assignments on the DB28 part, there are three primary port configurations available.  They are:
 
@@ -72,8 +112,45 @@ With these pin assignments on the DB28 part, there are three primary port config
 2 USARTs, no SPI, 1 I2C
 no USARTs, 2 SPI, 1 I2C
 
+In simplified table form these assignments for the DB28 DIP are:
+
+~~~text
+AVR-DB32       DBuno Edge
+Port Pins      Pin Lables
+---------      ----------
+  PA0             D8  via open solder bridge - 24 MHz Xtal
+  PA1             D9  via open solder bridge - 24 MHz Xtal
+  PA2             SDA
+  PA3             SDL
+  PA4             D1
+  PA5             D0
+  PA6             D2
+  PA7             D3
+  
+  PC0             D11
+  PC1             D12
+  PC2             D13
+  PC3             D10
+  
+  PD0             not present on DB28
+  PD1             A1
+  PD2             A2
+  PD3             A3
+  PD4             D6
+  PD5             A4  via closed solder bridge
+  PD6             D7
+  PD7             A0
+  
+  PF0             D4  via closed solder bridge
+  PF1             D5  via closed solder bridge
+  PF2             n/a
+  PF3             n/a
+  PF4             n/a
+  PF5             n/a
+  PF6              RESET*
+  
+                  A5 is isolated, no connection
+~~~
+
 
 These assignments for both the 32 pin part and the 28 pint part can be seen as a whole on a spread sheet at this link 
-
-
-
