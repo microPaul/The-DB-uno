@@ -11,9 +11,9 @@ I’ve given a fair amount of thought to have and have created a spread sheet (l
 
 1.	It’s more difficult to change a printed circuit board shield (daughter board) than it is firmware, so the firmware should accommodate the existing shields.
 
-2.	Given that this “DBuno” board would likely be used with existing shields, then the basic special functions of the Arduino UNO (UART, SPI, I2C) need to be provided on the same edge pins for the DBuno.  This might be done with primary or alternate pins, but those port functions must be provided on the same pins as used on the original UNO.  Specifically,  (a) a USART needs to be provided at D0 and D1, (b) a SPI port needs to be provided at D10, D11, D12 and D13, and (c) an I2C port needs to be provided at SCL and SDA, and finally, if possible, (d) provide I2C port on A4 and A5.
+2.	Given that this “DBuno” board would likely be used with existing shields, then the basic special functions of the Arduino UNO (UART, SPI, I2C) need to be provided on the same edge pins for the DBuno.  This might be done with primary or alternate pins, but those port functions must be provided on the same pins as used on the original UNO.  Specifically,  (a) a USART needs to be provided at D0 and D1, (b) an SPI port needs to be provided at D10, D11, D12 and D13, and (c) an I2C port needs to be provided at SCL and SDA, and finally, if possible, (d) provide an I2C port on A4 and A5.
 
-3.	Many of my projects require clock signals for timers with 100 ppm accuracy, which can only be achieved with a crystal, so I’m going to set reserve PA0 and PA1 for a 24 MHz crystal and load capacitors, and not bring those signals to the edge connector.  The crystal does not need to be populated for those who do not need 100 ppm and do not want the additional expense of a crystal, but the board layout will provide for the crystal.  Although the PF0 and PF1 leads are not connected to the DBuno edge connectors, these signals should be available on a two pin header for use in those cases where the crystal is not populated.
+3.	Many of my projects require clock signals for timers with 100 ppm accuracy, which can only be achieved with a crystal, so I’m going to set reserve PA0 and PA1 for a 24 MHz crystal and load capacitors, and not bring those signals to the edge connector.  The crystal does not need to be populated for those who do not want the additional expense of a crystal, but the board layout will provide for the crystal.  Although the PF0 and PF1 leads are not connected to the DBuno edge connectors, these signals should be available on a two pin header for use in those cases where the crystal is not populated.
 
 4.	One of the big attractions for me to the AVR-DB line (as well as the tinyAVR® 1-series) is the hardware DAC (Digital to Analog Converter).  So I will ensure that the DAC is available.
 
@@ -23,7 +23,7 @@ In considering the pin assignments, one factor to keep in mind is that, with the
 
 ## DB32 - Configuration for the 32 Pin Part
 
-So, as currently configured, this assignment table does the following:
+So, as currently configured, this assignment table assings MCU port pins to DBuno edge pins as follows:
 
 USART-0 (ALT) (PA5, PA4) appears on DBuno edge pins D0 and D1 respectively, placing a USART for the DBuno on the same pins as the original UNO.
 
@@ -32,7 +32,7 @@ SPI-1 (PC3, PC0, PC1, PC2) appears on DBuno edge pins D10, D11, D12 and D13 resp
 I2C-0 (PA2, PA3) appears on the DBuno edge pins SDA and SC respectively, placing an I2C port for the DBuno on the same pins as the original UNO.
 
 
-Additional pin port function assignments are as follows:
+Additional MCU pin port assignments are as follows:
 
 The Vref port (PD7) is provided on DBuno edge pin A0.
 
@@ -46,11 +46,11 @@ A DAC (PD6) is provided on DBuno edge pin D7.
 
 The XDIR-0(ALT) (PA7) pin for USART-0(ALT) at D0/D1 appears on DBuno edge pin D3, to facilitate RS-485 communications with this UART.  XCK-0(ALT) for the same USART appears on DBuno edge pin D2.
 
-USART-2  RX/TX (PF1/PF0) appear on D4/D5 respectively.
+USART-2  RX/TX (PF1/PF0) appear on D4/D5 respectively.  This is also used for the 32 KHz cyrstal and loading capacitors, which should be provided for on the board laout but not populate.
 
-If the SPI-1 port at D10-D13 is not used by firmware, the firmware can assign these pins to USART-1 (TX, RX, DIR, CK).  Similarly, if the USART-0(ALT) pins are not used as a USART they can be used for SPI-0.
+If the SPI-1 port at D10-D13 is not used by firmware, the firmware can assign those pins to USART-1 (TX, RX, DIR, CK).  Similarly, if the USART-0(ALT) pins are not used as a USART they can be used for SPI-0.
 
-At this point all DBuno edge pins have been assigned except D6, and the only AVR-DB32 port pins that have not been assigned are PD4 and PD5.  In reviewing the I/O Multiplexing table in section 3.1 of the AVR128DB28 data sheet, it’s not clear that one of these pins is more “useful” than the other, therefore I will arbitrarily assign PD4 to DBuno edge pin PD4.
+At this point all DBuno edge pins have been assigned except D6, and the only AVR-DB32 port pins that have not been assigned are PD4 and PD5.  In reviewing the I/O Multiplexing table in section 3.1 of the AVR128DB28 data sheet, it’s not clear that one of these pins is more “useful” than the other, therefore I will arbitrarily assign PD4 to DBuno edge pin PD4 and PD5 is unused.
 
 With those assignments complete, we have a system that is much more flexible than one based on the ATmega328p.  Not all functions are available in all situations.  Even though many of the pins on the AVR-DB serve several functions, they can only serve one function at a time.
 
@@ -64,7 +64,7 @@ With these pin assignments on the DB32 part, there are three primary port config
 
 In the case of the 28 pin DIP part (thank you Microchip for including a DIP package in the mix for those who have difficulty soldering surfacemount devices), we loose PF2, PF3 (access to I2C-1) and PF4 and PF5 (access to USART-2), which leaves open DBuno edge pins A4, A5, D8 and D9.
 
-So for a ARV-DB28 pin assignment, the external HF oscillators pins PA0 and P1 will be brought out to D8 and D9 respectively through solder bridge jumpers (closed if crystal is not populated, open if crystal is populated) and PD5 that was abandoned in the 32 pin configuration will be connected to DBuno edge pin A4 through a solder bride (normally closed).  DBuno edge pin A5 will be left open circuit.  With DBuno edge pins A5 open, and A4 capabile of being isolated, when needed the A4/A5 edge pins may be cross connected to SDA/SCL via small gauge wire jumpers.
+So for a ARV-DB28 pin assignment, the external HF oscillators pins PA0 and P1 will be brought out to D8 and D9 respectively through solder bridge jumpers (closed if crystal is not populated, open if crystal is populated) and PD5 that was abandoned in the 32 pin configuration will be connected to DBuno edge pin A4 through a solder bride (normally closed).  DBuno edge pin A5 will be left open-circuit.  With DBuno edge pins A5 isolcated, and A4 capabile of being isolated, when needed the A4/A5 edge pins may be cross connected by hand wiring to SDA/SCL via small gauge wire jumpers.
 
 With these pin assignments on the DB28 part, there are three primary port configurations available.  They are:
 
@@ -73,7 +73,7 @@ With these pin assignments on the DB28 part, there are three primary port config
 no USARTs, 2 SPI, 1 I2C
 
 
-These assignments can be seen as a whole on a spread sheet at this link (ignore for now the stuf about ATtiny3216)
+These assignments for both the 32 pin part and the 28 pint part can be seen as a whole on a spread sheet at this link 
 
 
 
