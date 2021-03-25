@@ -154,7 +154,7 @@ Port Pins   Pin Lables  Available Functions - Notes
 
 ## Other Considerations
 
-OK, we've gone that far, but what else might be considering for a DB-uno board?  These proposed changes and enhancements are just that, proposed.  Nothing is required, but all are worth some consideration.
+OK, we've gone that far, but what else might be considering for a DB-uno board?  These proposed changes and enhancements are just that, proposed.  Nothing is required, but all are worth of some consideration.
 
 ### UPDI vs The Serial Port - Programming and Debugging
 
