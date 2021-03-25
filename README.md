@@ -21,6 +21,7 @@ I’ve given a fair amount of thought to what the mappings should be from the MC
 
 In considering the pin assignments, one factor to keep in mind is that, with the exception of PF6 (RESET), all port pins can function as GPIOs.  So just because the assignment list doesn’t say GPIO, any and all port pins (excluding PF6) can be used for GPIO.
 
+
 ## DB32 - Configuration for the 32 Pin Part
 
 So, as currently configured, this assignment table assings MCU port pins to DB-uno edge pins as follows:
@@ -97,8 +98,8 @@ Port Pins   Pin Lables  Available Functions - Notes
   PF4        D8        2-USART-TX(ALT)   AIN20
   PF5        D9        2-USART-RX(ALT)   AIN21
   PF6        RESET*
-  
 ~~~
+
 
 ## DB28 - Configuration for the 28 Pin DIP Part
 
@@ -152,9 +153,11 @@ Port Pins   Pin Lables  Available Functions - Notes
              A5 is isolated, no connection
 ~~~
 
+
 ## Other Considerations
 
 OK, we've gone that far, but what else might be considering for a DB-uno board?  These proposed changes and enhancements are just that, proposed.  Nothing is required, but all are worth of some consideration.
+
 
 ### UPDI vs The Serial Port - Programming and Debugging
 
@@ -168,6 +171,7 @@ With the advent of of the pyupdi programming for AVR MCUs, I’ve lost interest 
 
 3.  Allow the USB<->Serial to be configured by solder bridge jumpers for normal connection to D0, D1 *or* to use as a pyupdi programmer by providing a solder bridge jumper that connects D0 to D1 through a 4.7 K ohm resistor, and then D0 to UPDI, to allow the USB<->Serial to perform programming via utility pyupdi.
 
+
 ### VDD
 
 To facilitate operation from batteries and use of sleep mode, provide a solder bridge jumper (closed) between the output of any voltage regulator or USB power source and VDD, so that the user can easily isolate VDD from all other power sources.
@@ -178,6 +182,12 @@ To facilitate operation from batteries and use of sleep mode, provide a solder b
 Finally, there's the question of VDDIO2, the alternate power rail for the PCx ports.  VDDIO2 is a strong feature of the AVR-DB products because it allows the PCx ports to operate at a different voltage than the main MCU voltage.  There is no requirement that VDDIO2 be have a higher or lower voltage and VDD.
 
 One solution is to tie VDDIO2 to VDD and call it done.  Nothing lost relative to the original UNO.  But I'd rather see VDDIO2 separate from VDD, with it's own filter caps (1 uF and 10 uF) connected to a 2 pin pinpost header.  Additionally, provide a normally closed solder bridge between VDD and VDDIO2.
+
+
+### Reallocating the Arduino Uno ISP Six Pin Header Area
+
+Because the AVR-DB parts use UPDI for programming and debug, there's no reason to retain the 2x3 pin header for SPI ISP programming.  That board area can be reallocated to a 3 pinpost header for UPDI as well as a 2 pinpost header for VDDOI2.
+
 
 <p align="center">
 ---ooOoo---
