@@ -179,9 +179,9 @@ To facilitate operation from batteries and use of sleep mode, provide a solder b
 
 ### VDDIO2
 
-Finally, there's the question of VDDIO2, the alternate power rail for the PCx ports.  VDDIO2 is a strong feature of the AVR-DB products because it allows the PCx ports to operate at a different voltage than the main MCU voltage.  There is no requirement that VDDIO2 be have a higher or lower voltage and VDD.
+Then there's the question of VDDIO2, the alternate power rail for the PCx ports.  VDDIO2 is a strong feature of the AVR-DB products because it allows the PCx ports to operate at a different voltage than the main MCU voltage.  There is no requirement that VDDIO2 be have a higher or lower voltage than VDD.
 
-One solution is to tie VDDIO2 to VDD and call it done.  Nothing lost relative to the original UNO.  But I'd rather see VDDIO2 separate from VDD, with it's own filter caps (1 uF and 10 uF) connected to a 2 pin pinpost header.  Additionally, provide a normally closed solder bridge between VDD and VDDIO2.
+One solution is to tie VDDIO2 to VDD and call it done.  Nothing lost relative to the original UNO.  But I'd rather see VDDIO2 separate from VDD, with it's own filter caps (1 uF and 10 uF) connected to a 2 pin pinpost header for power input.  Additionally, provide a normally closed solder bridge between VDD and VDDIO2 for when an external voltage source is not provided for VDDIO2.
 
 
 ### Reallocating the Arduino Uno ISP Six Pin Header Area
