@@ -186,7 +186,7 @@ One solution is to tie VDDIO2 to VDD and call it done.  Nothing lost relative to
 
 ### Reallocating the Arduino Uno ISP Six Pin Header Area
 
-*It's been pointed out to me that the ISP SPI 2x3 header on the Arduino UNO is often used by sheilds for SPI access and not D10-D13, since the Mega does not use D10-D13 for SPI.  So what I have stated below needs to be given more thought -- I might not change it, but pme needs to realize that removing the 2x3 header it might have a negative impact for some shields.*
+*It's been pointed out to me that the ISP SPI 2x3 header on the Arduino UNO is often used by sheilds for SPI access and not D10-D13, since the Mega does not use D10-D13 for SPI.  So what I have stated below needs to be given more thought -- I might not change it, but one needs to realize that removing the 2x3 header it might have a negative impact for some existing shields.*
 
 Because the AVR-DB parts use UPDI for programming and debug, there's no reason to retain the 2x3 pin header for SPI ISP programming.  That board area can be reallocated to a 3 pinpost header for UPDI as well as a 2 pinpost header for VDDOI2.
 
