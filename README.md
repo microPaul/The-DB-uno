@@ -19,6 +19,8 @@ I’ve given a fair amount of thought to what the mappings should be from the MC
 
 5.  I also want to ensure that all available PCx pins are aviable for use since they are powered from VDDIO2 and allow for different port voltage than that used for system voltage.
 
+6.  I understand that PWM signals are of importance to some people, but I was not able to meet my goals of item 2 above without giving a bit of short shrift toward PWM.  PWM signals are still available on the board edge pins, but not any any organized manner.  They are where they landed.
+
 In considering the pin assignments, one factor to keep in mind is that, with the exception of PF6 (RESET), all port pins can function as GPIOs.  So just because the assignment list doesn’t say GPIO, any and all port pins (excluding PF6) can be used for GPIO.
 
 
@@ -28,7 +30,7 @@ So, as currently configured, this assignment table assings MCU port pins to DB-u
 
 USART-0 (ALT) (PA5, PA4) appears on DB-uno edge pins D0 and D1 respectively, placing a USART for the DB-uno on the same pins as the original UNO.
 
-SPI-1 (PC3, PC0, PC1, PC2) appears on DB-uno edge pins D10, D11, D12 and D13 respectively, placing an SPI port for the DB-uno on the same pins as the original UNO.
+SPI-1 (PC3, PC0, PC1, PC2) appears on DB-uno edge pins D10, D11, D12 and D13 respectively, placing an SPI port (SPI-1) for the DB-uno on the same pins as the original UNO.  Note also that PCx pins are special in that they are powered from VDDIO2, and can have a different supply voltage than the main part of the microcontroller, avoiding voltage level shifting when operating a 3.3V peripheral from a 5V microcontroller (or vise versa). If the SPI-1 port at D10-D13 is not used by firmware, the firmware can assign those pins to USART-1 (TX, RX, DIR, CK).  Similarly, if the USART-0(ALT) pins are not used as a USART they can be used for SPI-0.  Again, all PCx ports can make use of internal level shifting.
 
 I2C-0 (PA2, PA3) appears on the DB-uno edge pins SDA and SC respectively, placing an I2C port for the DB-uno on the same pins as the original UNO.
 
@@ -37,7 +39,7 @@ Additional MCU pin port assignments are as follows:
 
 The Vref port (PD7) is provided on DB-uno edge pin A0.
 
-PD1, PD2 and PD3 are assigned DB-uno edge pins A1, A2 and A3 respectively, to provide access to OpAmp-0 or CCL-LUT-2.
+PD1, PD2 and PD3 are assigned DB-uno edge pins A1, A2 and A3 respectively for ADC inputs, as well as access to OpAmp-0 or CCL-LUT-2.
 
 I2C-1 (PF2, PF3) appears on DB-uno edge pins A4 and A5 respectively, placing an I2C port for the DB-uno on the same pins as the original UNO (note that on the original UNO the SDA and SCL pins were added as a later REV of the board, but they were cross-connected to A4 and A5 on the original UNO - so one I2C port was presented on two different sets of edge pins.  On the DB-uno pins SDA/SCL edge pins are independent of pins A4/A5 edge pins and use two independent I2C ports).
 
@@ -47,9 +49,9 @@ A DAC (PD6) is provided on DB-uno edge pin D7.
 
 The XDIR-0(ALT) (PA7) pin for USART-0(ALT) at D0/D1 appears on DB-uno edge pin D3, to facilitate RS-485 communications with this UART.  XCK-0(ALT) for the same USART appears on DB-uno edge pin D2.
 
-USART-2  RX/TX (PF1/PF0) appear on D4/D5 respectively.  This is also used for the 32 KHz cyrstal and loading capacitors, which should be provided for on the board laout but not populate.
+USART-2  RX/TX (PF1/PF0) appear on D4/D5 respectively.  This is also used for the 32 KHz cyrstal and loading capacitors, which should be provided for on the board laout but not populated unless needed.
 
-If the SPI-1 port at D10-D13 is not used by firmware, the firmware can assign those pins to USART-1 (TX, RX, DIR, CK).  Similarly, if the USART-0(ALT) pins are not used as a USART they can be used for SPI-0.
+
 
 At this point all DB-uno edge pins have been assigned except D6, and the only AVR-DB32 port pins that have not been assigned are PD4 and PD5.  In reviewing the I/O Multiplexing table in section 3.1 of the AVR128DB28 data sheet, it’s not clear that one of these pins is more “useful” than the other, therefore I will arbitrarily assign PD4 to DB-uno edge pin PD4 and PD5 is unused.
 
@@ -77,10 +79,10 @@ Port Pins   Pin Lables  Available Functions - Notes
   PA6        D2        0-USART-XCK(ALT)   0-SCK
   PA7        D3        0-USART-XDIR(ALT)  0-SS*
   
-  PC0        D11       1-USART-TX    1-MOSI  (VDDIO2)
-  PC1        D12       1-USART-RX    1-MISI  (VDDIO2)
-  PC2        D13       1-USART-XCK   1-SCK   (VDDIO2)
-  PC3        D10       1-USART-XDIR  1-SS*   (VDDIO2)
+  PC0        D11       1-USART-TX    1-MOSI              (VDDIO2)
+  PC1        D12       1-USART-RX    1-MISI              (VDDIO2)
+  PC2        D13       1-USART-XCK   1-SCK   0-SDA(ALT)  (VDDIO2)
+  PC3        D10       1-USART-XDIR  1-SS*   0-SCL(ALT)  (VDDIO2)
   
   PD0        not present on DB32
   PD1        A1        AIN1   OP0,INP   LUT2,IN1
@@ -91,10 +93,10 @@ Port Pins   Pin Lables  Available Functions - Notes
   PD6        D7        DAC    AIN6      LUT2,OUT(ALT)
   PD7        A0        VREFA  AIN7
   
-  PF0        D4        2-USART-TX      32K-XTAL - D4 via open solder bridge
-  PF1        D5        2-USART-RX      32K-XTAL - D5 via open solder bridge
-  PF2        A4        2-USART-XCK     1-SDA
-  PF3        A5        2-USART-XDIR    1-SCL
+  PF0        D4        2-USART-TX        32K-XTAL - D4 via open solder bridge
+  PF1        D5        2-USART-RX        32K-XTAL - D5 via open solder bridge
+  PF2        A4        2-USART-XCK       1-SDA
+  PF3        A5        2-USART-XDIR      1-SCL
   PF4        D8        2-USART-TX(ALT)   AIN20
   PF5        D9        2-USART-RX(ALT)   AIN21
   PF6        RESET*
@@ -103,7 +105,7 @@ Port Pins   Pin Lables  Available Functions - Notes
 
 ## DB28 - Configuration for the 28 Pin DIP Part
 
-In the case of the 28 pin DIP part (thank you Microchip for including a DIP package in the mix for those who have difficulty soldering surfacemount devices), we loose PF2, PF3 (access to I2C-1) and PF4 and PF5 (access to USART-2), which leaves open DB-uno edge pins A4, A5, D8 and D9.
+In the case of the 28 pin DIP part (thank you Microchip for including a DIP package in the mix for those who have difficulty soldering surface mount devices), we loose PF2, PF3 (access to I2C-1) and PF4 and PF5 (access to USART-2), which leaves open DB-uno edge pins A4, A5, D8 and D9.
 
 So for a ARV-DB28 pin assignment, the external HF oscillators pins PA0 and P1 will be brought out to D8 and D9 respectively through solder bridge jumpers (closed if crystal is not populated, open if crystal is populated) and PD5 that was abandoned in the 32 pin configuration will be connected to DB-uno edge pin A4 through a solder bride (normally closed).  DB-uno edge pin A5 will be left open-circuit.  With DB-uno edge pins A5 isolcated, and A4 capabile of being isolated, when needed the A4/A5 edge pins may be cross connected by hand wiring to edge pins SDA/SCL via small gauge wire jumpers.
 
@@ -128,10 +130,10 @@ Port Pins   Pin Lables  Available Functions - Notes
   PA6        D2        0-USART-XCK(ALT)   0-SCK
   PA7        D3        0-USART-XDIR(ALT)  0-SS*
   
-  PC0        D11       1-USART-TX    1-MOSI  (VDDIO2)
-  PC1        D12       1-USART-RX    1-MISI  (VDDIO2)
-  PC2        D13       1-USART-XCK   1-SCK   (VDDIO2)
-  PC3        D10       1-USART-XDIR  1-SS*   (VDDIO2)
+  PC0        D11       1-USART-TX    1-MOSI              (VDDIO2)
+  PC1        D12       1-USART-RX    1-MISI              (VDDIO2)
+  PC2        D13       1-USART-XCK   1-SCK   0-SDA(ALT)  (VDDIO2)
+  PC3        D10       1-USART-XDIR  1-SS*   0-SCL(ALT)  (VDDIO2)
   
   PD0        not present on DB28
   PD1        A1        AIN1   OP0,INP   LUT2,IN1
