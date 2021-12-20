@@ -1,4 +1,9 @@
 # The DB-uno
+
+I have a board design for a AVR-DB32 Uno that I should be able to post here by the end of the month.  Some of the pin assignments outline below will change.
+
+------------------------
+
 Using the AVR128DB32 on an Arduino UNO Form Factor Board
 
 I think Microchip’s new AVR128DBxx MCU is a large evolutionary step for the basic AVR® product line.  I’ve been using this device for several months, with both MPLAB X IDE with SNAP and the Arduino IDE using Spence Konde's DXcore (see https://github.com/SpenceKonde/DxCore ) and pyMCUprog style programming (see https://github.com/SpenceKonde/DxCore#from-a-usb-serial-adapter-pyupdi-style ).  Although the ATmega328p has been a great part for the original UNO, the AVR-DB is a big step forward.  So much so, that I want to design new projects for the AVR-DB and not the 328p.
