@@ -1,6 +1,6 @@
 # The DB-uno
 
-I have a board design for a AVR-DB32 Uno that I should be able to post here by the end of the month.  Some of the pin assignments outline below will change.
+I now have constructed several DB-UNO prototype boards designed with KiCad using 1206 components.  I'm up to Rev 4, which doesn't say much for my ability to get it right the first time.  A lot of the info below is out of date.  I need to correct that info as well as post the latest schematic, assembly drawing, parts list, gerber zip and the KiCad design files.  I hope to do that by April 15.  Note that some of the pin assignments outlined below will change.
 
 ------------------------
 
